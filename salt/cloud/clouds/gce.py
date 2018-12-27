@@ -2517,10 +2517,7 @@ def request_instance(vm_):
                 'the ex_on_host_maintenance setting is being set to '
                 'to \'TERMINATE\' as a result'
             )
-            kwargs.update({
-                'ex_on_host_maintenance': 'TERMINATE'
-            })
-
+            kwargs.['ex_on_host_maintenance'] = 'TERMINATE'
 
     log.info(
         'Creating GCE instance %s in %s',
