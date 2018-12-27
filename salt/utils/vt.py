@@ -689,7 +689,7 @@ class Terminal(object):
                             # Python 2 requires encoding of the string, 3+ does not
                             if sys.version_info[0] == 2:
                                 self.stream_stdout.write(salt.utils.data.encode(stdout))
-                            else 
+                            else:
                                 self.stream_stdout.write(stdout)
                             self.stream_stdout.flush()
 
