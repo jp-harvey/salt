@@ -2520,7 +2520,7 @@ def request_instance(vm_):
                 'ex_accelerator_count', vm_, __opts__, default=None)
         })
         if kwargs.get('ex_accelerator_type'):
-            log.warn(
+            log.warning(
                 'An accelerator is being attached to this instance, '
                 'the ex_on_host_maintenance setting is being set to '
                 'to \'TERMINATE\' as a result'
