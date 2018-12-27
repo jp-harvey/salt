@@ -2523,7 +2523,7 @@ def request_instance(vm_):
             log.warning(
                 'An accelerator is being attached to this instance, '
                 'the ex_on_host_maintenance setting is being set to '
-                'to \'TERMINATE\' as a result'
+                '\'TERMINATE\' as a result'
             )
             kwargs.update({
                 'ex_on_host_maintenance': 'TERMINATE'
