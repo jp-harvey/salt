@@ -2500,24 +2500,34 @@ def request_instance(vm_):
             'ex_can_ip_forward': config.get_cloud_config_value(
                 'ip_forwarding', vm_, __opts__, default=False),
             'ex_preemptible': config.get_cloud_config_value(
-                'preemptible', vm_, __opts__, default=False),
-            'ex_accelerator_type': config.get_cloud_config_value(
-                'ex_accelerator_type', vm_, __opts__, default=None),
-            'ex_accelerator_count': config.get_cloud_config_value(
-                'ex_accelerator_count', vm_, __opts__, default=None)
+                'preemptible', vm_, __opts__, default=False)
         })
         if kwargs.get('ex_disk_type') not in ('pd-standard', 'pd-ssd'):
             raise SaltCloudSystemExit(
                 'The value of \'ex_disk_type\' needs to be one of: '
                 '\'pd-standard\', \'pd-ssd\''
             )
+
+    # GCE accelerator options are only supported as of libcloud >= 2.3.0
+    # and Python 3+ is required so that libcloud will detect a type of 
+    # 'string' rather than 'unicode'
+    if LIBCLOUD_VERSION_INFO >= (2, 3, 0) and isinstance(u'test', str):
+
+        kwargs.update({
+            'ex_accelerator_type': config.get_cloud_config_value(
+                'ex_accelerator_type', vm_, __opts__, default=None),
+            'ex_accelerator_count': config.get_cloud_config_value(
+                'ex_accelerator_count', vm_, __opts__, default=None)
+        })
         if kwargs.get('ex_accelerator_type'):
             log.warn(
                 'An accelerator is being attached to this instance, '
                 'the ex_on_host_maintenance setting is being set to '
                 'to \'TERMINATE\' as a result'
             )
-            kwargs['ex_on_host_maintenance'] = 'TERMINATE'
+            kwargs.update({
+                'ex_on_host_maintenance': 'TERMINATE'
+            })
 
     log.info(
         'Creating GCE instance %s in %s',
