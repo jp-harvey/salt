@@ -2509,7 +2509,7 @@ def request_instance(vm_):
             )
 
     # GCE accelerator options are only supported as of libcloud >= 2.3.0
-    # and Python 3+ is required so that libcloud will detect a type of 
+    # and Python 3+ is required so that libcloud will detect a type of
     # 'string' rather than 'unicode'
     if LIBCLOUD_VERSION_INFO >= (2, 3, 0) and isinstance(u'test', str):
 
